@@ -1,0 +1,88 @@
+body{
+  background-color:#000000;
+  position:relative;
+}
+p{
+  color:#FFFFFF;
+}
+
+.title{
+  margin-left:44em;
+  width:11%;
+}
+
+#maintitle{
+  font-family:"Courier New";
+  font-size:5em;
+  color:#FFFFFF;
+  float:center;
+}
+
+.score{
+  font-family:"Courier New";
+  font-size:2em;
+  color:#FFFFFF;
+  margin-left: 13em;
+  width:24em;
+  position:relative;
+  top:-70px;
+}
+
+#leftscore{
+  float:left;
+}
+
+#rightscore{
+  float:right;
+}
+
+.field{
+  display:inline-block;
+  border: 4px solid;
+  border-color: #FFFFFF;
+  height:25em;
+  width:25em;
+}
+
+#leftfield{
+  border-right-style: dashed;
+  position: absolute;
+  left: 25em;
+  top: 12em;
+}
+
+#rightfield{
+  border-left-style: none;
+  position: absolute;
+  left: 50em;
+  top: 12em;
+}
+
+.bumper{
+  border: 2px solid;
+  border-color: #FFFFFF;
+  height: 5em;
+  width: 0em;
+}
+
+#leftbumper{
+  position: absolute;
+  left: 26em;
+  top: 21.5em;
+}
+
+#rightbumper{
+  position: absolute;
+  left: 74em;
+  top: 21.5em;
+}
+
+#ball{
+  height: 10px;
+  width: 10px;
+  border-radius: 5px;
+  background: #FFFFFF;
+  position: absolute;
+  left: 50em;
+  top: 23em;
+}
