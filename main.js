@@ -1,7 +1,15 @@
+var start = false;
+
 $(document).ready(function(){
   var map = {87:false,83:false,38:false,40:false};
 
   $(document).keydown(function (e) {
+    if(!start){
+      start = true;
+      moveBall(parseInt(ballX),parseInt(ballY),4,4);
+    }
+
+
     var height1 = $('#leftbumper').css('top');
     height1 = height1.substring(0,height1.length - 2);
     height1 = parseInt(height1);
@@ -42,7 +50,7 @@ $(document).ready(function(){
   var ballY = $('#ball').css('top');
   ballX = ballX.substring(0,ballX.length - 2);
   ballY = ballY.substring(0,ballY.length - 2);
-  moveBall(parseInt(ballX),parseInt(ballY),4,4);
+  //moveBall(parseInt(ballX),parseInt(ballY),4,4);
 
 
 });
@@ -55,21 +63,58 @@ function moveBall(x,y,vX,vY){
   var newVX = vX;
   var newVY = vY;
   if(newY >= 590 || newY <= 195){
-    newVY = -newVY;
+    newVY = -vY;
     var snd = new Audio("pong.wav");
     snd.play();
   }
-  if(newX - parseInt($('#leftbumper').css('left')) <= 4 && newX - parseInt($('#leftbumper').css('left')) >= 0 && newVX < 0){
+  if(newX - parseInt($('#leftbumper').css('left')) <= 6 && newX - parseInt($('#leftbumper').css('left')) >= 0 && vX < 0){
     if(newY - parseInt($('#leftbumper').css('top')) >= 0 && newY - parseInt($('#leftbumper').css('top')) <= 80){
-      newVX = -newVX;
+      //newVX = -vX;
+
+      //New:
+      var theta = 45;
+      if(vY > 0){
+        theta = (newY - parseInt($('#leftbumper').css('top')))/80 * 90;
+        newVY = 1;
+      }else if(vY <= 0){
+        theta = (80 - (newY - parseInt($('#leftbumper').css('top'))))/80 * 90;
+        newVY = -1;
+      }
+      theta = 3*theta/5 + 18;
+
+      newVY *= Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.cos(theta*Math.PI/180);
+      newVX = Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.sin(theta*Math.PI/180);
+      console.log(newVX);
+
+      //End new
+
       var snd = new Audio("pong2.wav");
       snd.play();
     }
   }
 
-  if(newX - parseInt($('#rightbumper').css('left')) >= -4 && newX - parseInt($('#rightbumper').css('left')) <= 0 && newVX > 0){
+  if(newX - parseInt($('#rightbumper').css('left')) >= -6 && newX - parseInt($('#rightbumper').css('left')) <= 0 && vX > 0){
     if(newY - parseInt($('#rightbumper').css('top')) >= 0 && newY - parseInt($('#rightbumper').css('top')) <= 80){
-      newVX = -newVX;
+      //newVX = -vX;
+
+      //New:
+      var theta = 45;
+      if(vY > 0){
+        theta = (newY - parseInt($('#rightbumper').css('top')))/80 * 90;
+        newVY = 1;
+      }else if(vY <= 0){
+        theta = (80 - (newY - parseInt($('#rightbumper').css('top'))))/80 * 90;
+        newVY = -1;
+      }
+      theta = 3*theta/5 + 18;
+
+      newVY *= Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.cos(theta*Math.PI/180);
+      newVX = -Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.sin(theta*Math.PI/180);
+
+
+      //End new
+
+
       var snd = new Audio("pong2.wav");
       snd.play();
     }
@@ -78,16 +123,16 @@ function moveBall(x,y,vX,vY){
   if(newX <= 400){
     newX = 800;
     newY = 368;
-    vX = -4;
-    vY = 4;
+    newVX = -4;
+    newVY = 4;
     $('#rightscore').html(parseInt($('#rightscore').html() )+1);
   }
 
   if(newX >= 1190){
     newX = 800;
     newY = 368;
-    vX = 4;
-    vY = 4;
+    newVX = 4;
+    newVY = 4;
     $('#leftscore').html(parseInt($('#leftscore').html() )+1);
   }
 
