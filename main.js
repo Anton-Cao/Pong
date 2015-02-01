@@ -13,19 +13,19 @@ $(document).ready(function(){
     if(e.keyCode in map){
       map[e.keyCode] = true;
       if(map[87] && height1 >= 200){
-        height1-=5;
+        height1-=7;
         $('#leftbumper').css('top',height1.toString() +"px");
       }
       if(map[83] && height1 <= 510){
-        height1+=5;
+        height1+=7;
         $('#leftbumper').css('top',height1.toString() +"px");
       }
       if(map[38] && height2 >= 200){
-        height2-=5;
+        height2-=7;
         $('#rightbumper').css('top',height2.toString() +"px");
       }
       if(map[40] && height2 <= 510){
-        height2+=5;
+        height2+=7;
         $('#rightbumper').css('top',height2.toString() +"px");
       }
     }
@@ -93,5 +93,5 @@ function moveBall(x,y,vX,vY){
 
   //$('#one').html(parseInt($('.bumper').css('height')));
   //$('#two').html(parseInt($('#leftbumper').css('top')));
-  setTimeout(function(){moveBall(newX,newY,newVX,newVY)}, 20);
+  setTimeout(function(){moveBall(newX,newY,newVX,newVY)}, 12);
 }
