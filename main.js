@@ -67,7 +67,7 @@ function moveBall(x,y,vX,vY){
     var snd = new Audio("pong.wav");
     snd.play();
   }
-  if(newX - parseInt($('#leftbumper').css('left')) <= 6 && newX - parseInt($('#leftbumper').css('left')) >= 0 && vX < 0){
+  if(newX - parseInt($('#leftbumper').css('left')) <= -vX && newX - parseInt($('#leftbumper').css('left')) >= 0 && vX < 0){
     if(newY - parseInt($('#leftbumper').css('top')) >= 0 && newY - parseInt($('#leftbumper').css('top')) <= 80){
       //newVX = -vX;
 
@@ -93,7 +93,7 @@ function moveBall(x,y,vX,vY){
     }
   }
 
-  if(newX - parseInt($('#rightbumper').css('left')) >= -6 && newX - parseInt($('#rightbumper').css('left')) <= 0 && vX > 0){
+  if(newX - parseInt($('#rightbumper').css('left')) >= -vX && newX - parseInt($('#rightbumper').css('left')) <= 0 && vX > 0){
     if(newY - parseInt($('#rightbumper').css('top')) >= 0 && newY - parseInt($('#rightbumper').css('top')) <= 80){
       //newVX = -vX;
 
