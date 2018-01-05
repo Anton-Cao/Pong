@@ -59,20 +59,20 @@ p{
   top: 12em;
 }
 
-.bumper{
+.paddle{
   border: 2px solid;
   border-color: #FFFFFF;
-  height: 5em;
+  height: 80px;
   width: 0em;
 }
 
-#leftbumper{
+#leftpaddle{
   position: absolute;
   left: 26em;
   top: 21.5em;
 }
 
-#rightbumper{
+#rightpaddle{
   position: absolute;
   left: 74em;
   top: 21.5em;
