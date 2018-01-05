@@ -1,2 +1,11 @@
 # Pong
-Basic pong webgame
+Pong in the browser.
+
+## TODO
+- [x] Fix paddle speed
+- [x] Refactor moveBall calculations (+fix ball going through paddle bug)
+- [x] Add pause button
+- [ ] Fix CSS formatting (+fix ball bouncing early off paddle 1 bug)
+- [ ] Add options for speed, color, paddleWidth, etc.
+- [ ] Add instructions
+- [x] Decrease maximum angle that ball can bounce off

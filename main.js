@@ -1,142 +1,145 @@
-var start = false;
+const refreshRate = 12;
+const epsilon = 2; // margin of error for paddle-ball collision
+const wallSound = new Audio("pong.wav");
+const paddleSound = new Audio("pong2.wav");
 
-$(document).ready(function(){
-  var map = {87:false,83:false,38:false,40:false};
+let paddleSpeed = 7;
+let ballSpeed = 4;
+let start = false;
+let map = {87:false, 83:false, 38:false, 40:false}; // stores which keys are being pressed, to fix ghosting
 
-  $(document).keydown(function (e) {
-    if(!start){
-      start = true;
-      moveBall(parseInt(ballX),parseInt(ballY),4,4);
+// stores current speed of ball to allow for pausing
+let vX = ballSpeed;
+let vY = ballSpeed;
+
+$(document).ready(function() {
+    
+  $(document).keydown(function(e) {
+    // toggle start when spacebar is pressed
+    if (e.keyCode === 32) {
+      start = !start;
+      if (start) { move(); }
     }
-
-
-    var height1 = $('#leftbumper').css('top');
-    height1 = height1.substring(0,height1.length - 2);
-    height1 = parseInt(height1);
-
-    var height2 = $('#rightbumper').css('top');
-    height2 = height2.substring(0,height2.length - 2);
-    height2 = parseInt(height2);
-
-    if(e.keyCode in map){
+    
+    if (e.keyCode in map) {
       map[e.keyCode] = true;
-      if(map[87] && height1 >= 200){
-        height1-=7;
-        $('#leftbumper').css('top',height1.toString() +"px");
-      }
-      if(map[83] && height1 <= 510){
-        height1+=7;
-        $('#leftbumper').css('top',height1.toString() +"px");
-      }
-      if(map[38] && height2 >= 200){
-        height2-=7;
-        $('#rightbumper').css('top',height2.toString() +"px");
-      }
-      if(map[40] && height2 <= 510){
-        height2+=7;
-        $('#rightbumper').css('top',height2.toString() +"px");
-      }
     }
   });
 
-  $(document).keyup(function (e) {
-      if(e.keyCode in map){
-        map[e.keyCode] =false;
+  $(document).keyup(function(e) {
+      if (e.keyCode in map) {
+        map[e.keyCode] = false;
       }
   });
-
-
-  var ballX = $('#ball').css('left');
-  var ballY = $('#ball').css('top');
-  ballX = ballX.substring(0,ballX.length - 2);
-  ballY = ballY.substring(0,ballY.length - 2);
-  //moveBall(parseInt(ballX),parseInt(ballY),4,4);
-
 
 });
 
-function moveBall(x,y,vX,vY){
-  var newX = x+vX;
-  var newY = y+vY;
+function move() {
+  movePaddles();
+  moveBall();
+  if (start) { setTimeout(function(){move()}, refreshRate); }
+}
+
+function movePaddles() {
+  let height1 = parseInt($('#leftpaddle').css('top'));
+  let height2 = parseInt($('#rightpaddle').css('top'));
+
+  if (map[87] && height1 >= 200) {
+    height1 -= paddleSpeed;
+    $('#leftpaddle').css('top',height1.toString() +"px");
+  }
+  if (map[83] && height1 <= 510) {
+    height1 += paddleSpeed;
+    $('#leftpaddle').css('top',height1.toString() +"px");
+  }
+  if (map[38] && height2 >= 200) {
+    height2 -= paddleSpeed;
+    $('#rightpaddle').css('top',height2.toString() +"px");
+  }
+  if (map[40] && height2 <= 510) {
+    height2 += paddleSpeed;
+    $('#rightpaddle').css('top',height2.toString() +"px");
+  }
+}
+
+function moveBall() {
+  const newX = parseInt($('#ball').css('left')) + vX;
+  const newY = parseInt($('#ball').css('top')) + vY;
   $('#ball').css('left',newX.toString() + "px");
   $('#ball').css('top',newY.toString() + "px");
-  var newVX = vX;
-  var newVY = vY;
-  if(newY >= 590 || newY <= 195){
-    newVY = -vY;
-    var snd = new Audio("pong.wav");
-    snd.play();
+  
+  let newVX = vX;
+  let newVY = vY;
+
+  // collision with top wall
+  if (newY <= 195) {
+    newVY = Math.abs(vY);
+    wallSound.play();
   }
-  if(newX - parseInt($('#leftbumper').css('left')) <= -vX && newX - parseInt($('#leftbumper').css('left')) >= 0 && vX < 0){
-    if(newY - parseInt($('#leftbumper').css('top')) >= 0 && newY - parseInt($('#leftbumper').css('top')) <= 80){
-      //newVX = -vX;
 
-      //New:
-      var theta = 45;
-      if(vY > 0){
-        theta = (newY - parseInt($('#leftbumper').css('top')))/80 * 90;
-        newVY = 1;
-      }else if(vY <= 0){
-        theta = (80 - (newY - parseInt($('#leftbumper').css('top'))))/80 * 90;
-        newVY = -1;
-      }
-      theta = 3*theta/5 + 18;
+  if (newY >= 590) {
+    newVY = -Math.abs(vY);
+    wallSound.play();
+  }
 
-      newVY *= Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.cos(theta*Math.PI/180);
-      newVX = Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.sin(theta*Math.PI/180);
-      console.log(newVX);
+  // angle from vertical at which ball reflects off paddle
+  function getTheta(vY, ballY, paddleY) {
+    let theta = 45;
+    if (vY > 0) {
+      theta = (ballY - paddleY) / 80 * 90;
+    } else {
+      theta = (80 - (newY - paddleY)) / 80 * 90;
+    }
+    theta = theta / 2 + 30; // maps distance along paddle to angle between 30 and 75
+    return theta;
+  }
 
-      //End new
+  // collision with P1 paddle
+  const leftX = parseInt($('#leftpaddle').css('left'));
+  const leftY = parseInt($('#leftpaddle').css('top'));
+  if (newX + vX <= leftX + epsilon && newX >= leftX - epsilon) {
+    if (newY >= leftY - epsilon && newY <= leftY + 80 + epsilon) {
+      
+      const theta = getTheta(vY, newY, leftY);
 
-      var snd = new Audio("pong2.wav");
-      snd.play();
+      newVY = Math.sign(vY) * Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.cos(theta * Math.PI/180);
+      newVX = Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.sin(theta * Math.PI/180);
+
+      paddleSound.play();
     }
   }
 
-  if(newX - parseInt($('#rightbumper').css('left')) >= -vX && newX - parseInt($('#rightbumper').css('left')) <= 0 && vX > 0){
-    if(newY - parseInt($('#rightbumper').css('top')) >= 0 && newY - parseInt($('#rightbumper').css('top')) <= 80){
-      //newVX = -vX;
+  // collision with P2 paddle
+  const rightX = parseInt($('#rightpaddle').css('left'));
+  const rightY = parseInt($('#rightpaddle').css('top'));
+  if (newX + vX >= rightX && newX <= rightX + epsilon) {
+    if (newY >= rightY - epsilon && newY <= rightY + 80 + epsilon) {
 
-      //New:
-      var theta = 45;
-      if(vY > 0){
-        theta = (newY - parseInt($('#rightbumper').css('top')))/80 * 90;
-        newVY = 1;
-      }else if(vY <= 0){
-        theta = (80 - (newY - parseInt($('#rightbumper').css('top'))))/80 * 90;
-        newVY = -1;
-      }
-      theta = 3*theta/5 + 18;
+      const theta = getTheta(vY, newY, rightY);
 
-      newVY *= Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.cos(theta*Math.PI/180);
-      newVX = -Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.sin(theta*Math.PI/180);
+      newVY = Math.sign(vY) * Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.cos(theta*Math.PI/180);
+      newVX = -Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.sin(theta * Math.PI/180);
 
-
-      //End new
-
-
-      var snd = new Audio("pong2.wav");
-      snd.play();
+      paddleSound.play();
     }
   }
 
-  if(newX <= 400){
-    newX = 800;
-    newY = 368;
-    newVX = -4;
-    newVY = 4;
-    $('#rightscore').html(parseInt($('#rightscore').html() )+1);
+  if(newX < 400){
+    $('#ball').css('left',"800px");
+    $('#ball').css('top',"368px");
+    newVX = -ballSpeed;
+    newVY = ballSpeed;
+    $('#rightscore').html(parseInt($('#rightscore').html()) + 1);
   }
 
-  if(newX >= 1190){
-    newX = 800;
-    newY = 368;
-    newVX = 4;
-    newVY = 4;
-    $('#leftscore').html(parseInt($('#leftscore').html() )+1);
+  if(newX > 1190){
+    $('#ball').css('left',"800px");
+    $('#ball').css('top',"368px");
+    newVX = ballSpeed;
+    newVY = ballSpeed;
+    $('#leftscore').html(parseInt($('#leftscore').html()) + 1);
   }
 
-  //$('#one').html(parseInt($('.bumper').css('height')));
-  //$('#two').html(parseInt($('#leftbumper').css('top')));
-  setTimeout(function(){moveBall(newX,newY,newVX,newVY)}, 12);
+  vX = newVX;
+  vY = newVY;
 }
