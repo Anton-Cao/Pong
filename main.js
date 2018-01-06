@@ -137,7 +137,7 @@ function moveBall() {
 
   if (newX >= fieldWidth - 10) {
     $('#ball').css('left', (fieldWidth / 2).toString() + "px");
-    $('#ball').css('top', fieldHeight.toString() + "px");
+    $('#ball').css('top', (fieldHeight / 2).toString() + "px");
     newVX = ballSpeed;
     newVY = ballSpeed;
     $('#leftscore').html(parseInt($('#leftscore').html()) + 1);
