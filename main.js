@@ -1,5 +1,5 @@
 const refreshDelay = 12;
-const epsilon = 2; // margin of error for paddle-ball collision, 2*epsilon should be greater than vX
+const epsilon = 2; // margin of error for paddle-ball collision
 const wallSound = new Audio("pong.wav");
 const paddleSound = new Audio("pong2.wav");
 const fieldHeight = 384;
@@ -22,6 +22,7 @@ $(document).ready(function() {
   $(document).keydown(function(e) {
     // toggle start when spacebar is pressed
     if (e.keyCode === 32) {
+      $('.setting').toggleClass('disabled');
       if (!start) {
         start = true;
         $('#rightscore').text("0");
@@ -171,9 +172,11 @@ function moveBall() {
     if (parseInt($('#rightscore').html()) < parseInt($('#leftscore').html())) {
       $('#message').text("Player 1 Wins! Press [space] to restart.");
       start = false;
+      $('.setting').toggleClass('disabled');
     } else if (parseInt($('#rightscore').html()) > parseInt($('#leftscore').html())) {
       $('#message').text("Player 2 Wins! Press [space] to restart.");
       start = false;
+      $('.setting').toggleClass('disabled');
     }
   }
   
