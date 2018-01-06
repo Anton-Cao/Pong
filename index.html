@@ -4,6 +4,7 @@
     <link rel="shortcut icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="shortcut icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link type = "text/css" rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
 
@@ -13,13 +14,15 @@
     <div id="title">
       <h1>PONG</h1>
     </div>
-    
+
+    <div id="message">Press any key to begin!</div>
+
     <div id="score">
-      <h2 id="leftscore">0</h2>
-      <h2 id="rightscore">0</h2>
+      <p id="leftscore">0</p>
+      <p id="rightscore">0</p>
       <br style="clear: both;">
     </div>
-
+    
     <div id="field">
       <div class="halffield" id="leftfield">
         <div class="paddle" id="leftpaddle"></div>
@@ -35,7 +38,8 @@
     </div>
     
     <div id="instructions">
-      <p>Press [space] to begin!</p>
+      <p id="p1-controls">Player 1 - Up: <strong>W</strong> Down: <strong>S</strong></p>
+      <p id="p2-controls">Player 2 - Up: <i class="fa fa-arrow-up"></i> Down: <i class="fa fa-arrow-down"></i></p>
     </div>
     
   </body>

@@ -9,6 +9,7 @@ let paddleSpeed = 7;
 let paddleWidth = 80;
 let ballSpeed = 4;
 let start = false;
+let paused = false;
 let map = {87:false, 83:false, 38:false, 40:false}; // stores which keys are being pressed, to fix ghosting
 
 // stores current speed of ball to allow for pausing
@@ -19,9 +20,20 @@ $(document).ready(function() {
     
   $(document).keydown(function(e) {
     // toggle start when spacebar is pressed
-    if (e.keyCode === 32) {
-      start = !start;
-      if (start) { move(); }
+    if (e.keyCode === 32 && start) {
+      paused = !paused;
+      if (!paused) {
+        $('#message').text("Press [space] to pause!");
+        move();
+      } else {
+        $('#message').text("Press [space] to resume!");
+      }
+    }
+    
+    if (!start) {
+      start = true;
+      $('#message').text("Press [space] to pause!");
+      move();
     }
     
     if (e.keyCode in map) {
@@ -40,7 +52,7 @@ $(document).ready(function() {
 function move() {
   movePaddles();
   moveBall();
-  if (start) { setTimeout(function(){move()}, refreshRate); }
+  if (start && !paused) { setTimeout(function(){move()}, refreshRate); }
 }
 
 function movePaddles() {
