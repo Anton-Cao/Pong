@@ -1,89 +1,84 @@
-body{
-  background-color:#000000;
-  position:relative;
+body {
+  background-color: #000000;
+  position: relative;
+  font-family: "Courier New";
+  color: #FFFFFF;
 }
 
-p{
-  color:#FFFFFF;
+#title {
+  margin-top: 5vh;
+  text-align: center;
 }
 
-.title{
-  margin-left:44em;
-  width:11%;
+h1 {
+  margin: 0;
+  font-size: 5em;
 }
 
-#maintitle{
-  font-family:"Courier New";
-  font-size:5em;
-  color:#FFFFFF;
-  float:center;
+#score {
+  font-size: 2em;
+  color: #FFFFFF;
+  margin: 0 auto;
+  width: 768px;
+  position: relative;
 }
 
-.score{
-  font-family:"Courier New";
-  font-size:2em;
-  color:#FFFFFF;
-  margin-left: 13em;
-  width:24em;
-  position:relative;
-  top:-70px;
+#leftscore {
+  float: left;
 }
 
-#leftscore{
-  float:left;
+#rightscore {
+  float: right;
 }
 
-#rightscore{
-  float:right;
+#field {
+  margin: 0 auto;
+  width: 768px;
 }
 
-.field{
-  display:inline-block;
+.halffield {
   border: 4px solid;
   border-color: #FFFFFF;
-  height:25em;
-  width:25em;
+  height: 384px;
+  width: 378px;
 }
 
-#leftfield{
+#leftfield {
   border-right-style: dashed;
-  position: absolute;
-  left: 25em;
-  top: 12em;
+  float: left;
 }
 
-#rightfield{
+#rightfield {
   border-left-style: none;
-  position: absolute;
-  left: 50em;
-  top: 12em;
+  float: right;
 }
 
-.paddle{
-  border: 2px solid;
-  border-color: #FFFFFF;
+.paddle {
+  background: white;
   height: 80px;
-  width: 0em;
+  width: 4px;
 }
 
-#leftpaddle{
-  position: absolute;
-  left: 26em;
-  top: 21.5em;
+#leftpaddle {
+  position: relative;
+  float: left;
+  left: 10px;
+  top: 152px;
 }
 
-#rightpaddle{
-  position: absolute;
-  left: 74em;
-  top: 21.5em;
+#rightpaddle {
+  position: relative;
+  float: right;
+  right: 10px;
+  top: 152px;
 }
 
-#ball{
+#ball {
   height: 10px;
   width: 10px;
   border-radius: 5px;
   background: #FFFFFF;
-  position: absolute;
-  left: 50em;
-  top: 23em;
+  position: relative;
+  left: 380px;
+  top: 192px;
 }
