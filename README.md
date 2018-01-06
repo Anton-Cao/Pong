@@ -5,7 +5,8 @@ Pong in the browser.
 - [x] Fix paddle speed
 - [x] Refactor moveBall calculations (+fix ball going through paddle bug)
 - [x] Add pause button
-- [ ] Fix CSS formatting (+fix ball bouncing early off paddle 1 bug)
+- [x] Decrease maximum angle that ball can bounce off
+- [x] Fix CSS formatting (+fix ball bouncing early off paddle 1 bug)
 - [ ] Add options for speed, color, paddleWidth, etc.
 - [ ] Add instructions
-- [x] Decrease maximum angle that ball can bounce off
+- [ ] Add favicon
