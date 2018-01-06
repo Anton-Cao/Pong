@@ -111,3 +111,9 @@ h1 {
   width: 768px;
   margin: 0 auto;
 }
+
+.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: gray;
+}

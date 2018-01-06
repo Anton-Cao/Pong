@@ -1,5 +1,5 @@
 const refreshDelay = 12;
-const epsilon = 2; // margin of error for paddle-ball collision, 2*epsilon should be greater than vX
+const epsilon = 2; // margin of error for paddle-ball collision
 const wallSound = new Audio("pong.wav");
 const paddleSound = new Audio("pong2.wav");
 const fieldHeight = 384;
@@ -22,6 +22,7 @@ $(document).ready(function() {
   $(document).keydown(function(e) {
     // toggle start when spacebar is pressed
     if (e.keyCode === 32) {
+      $('.setting').toggleClass('disabled');
       if (!start) {
         start = true;
         $('#rightscore').text("0");
@@ -58,6 +59,29 @@ $(document).ready(function() {
     $('#ball').css('background', $('#color').val());
     $('#color').blur();
   });
+
+  $('#speed').change(function() {
+    const newSpeed = parseInt($('#speed').val());
+    vX = vX * newSpeed / ballSpeed;
+    vY = vY * newSpeed / ballSpeed;
+    ballSpeed = newSpeed;
+    $('#speed').blur();
+  });
+
+  $('#scoreCap').change(function() {
+    scoreCap = parseInt($('#scoreCap').val());
+    $('#scoreCap').blur();
+  });
+  
+  $('#paddleWidth').change(function() {
+    paddleWidth = parseInt($('#paddleWidth').val());
+    const leftY = parseInt($('#leftpaddle').css('top'));
+    const rightY = parseInt($('#rightpaddle').css('top'));
+    $('#leftpaddle').css('top', Math.min(leftY, fieldHeight - paddleWidth).toString() + "px");
+    $('#rightpaddle').css('top', Math.min(rightY, fieldHeight - paddleWidth).toString() + "px");
+    $('.paddle').css('height', paddleWidth.toString() + "px");
+    $('#paddleWidth').blur();
+  });
   
 });
 
@@ -77,6 +101,9 @@ function movePaddles() {
   }
   if (map[83] && height1 + paddleWidth <= fieldHeight) {
     height1 += paddleSpeed;
+    if (height1 + paddleWidth > fieldHeight) {
+      height1 = fieldHeight - paddleWidth;
+    }
     $('#leftpaddle').css('top',height1.toString() +"px");
   }
   if (map[38] && height2 >= 0) {
@@ -85,6 +112,9 @@ function movePaddles() {
   }
   if (map[40] && height2 + paddleWidth <= fieldHeight) {
     height2 += paddleSpeed;
+    if (height2 + paddleWidth > fieldHeight) {
+      height2 = fieldHeight - paddleWidth;
+    }
     $('#rightpaddle').css('top',height2.toString() +"px");
   }
 }
@@ -171,9 +201,11 @@ function moveBall() {
     if (parseInt($('#rightscore').html()) < parseInt($('#leftscore').html())) {
       $('#message').text("Player 1 Wins! Press [space] to restart.");
       start = false;
+      $('.setting').toggleClass('disabled');
     } else if (parseInt($('#rightscore').html()) > parseInt($('#leftscore').html())) {
       $('#message').text("Player 2 Wins! Press [space] to restart.");
       start = false;
+      $('.setting').toggleClass('disabled');
     }
   }
   
