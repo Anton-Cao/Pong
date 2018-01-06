@@ -17,18 +17,28 @@ h1 {
 
 #score {
   font-size: 2em;
-  color: #FFFFFF;
   margin: 0 auto;
   width: 768px;
   position: relative;
+  bottom: -80px;
 }
 
 #leftscore {
   float: left;
+  width: 45%;
+  text-align: right;
 }
 
 #rightscore {
   float: right;
+  width: 45%;
+  text-align: left;
+}
+
+#message {
+  width: auto;
+  margin: 10px auto;
+  text-align: center;
 }
 
 #field {
@@ -81,4 +91,19 @@ h1 {
   position: relative;
   left: 380px;
   top: 192px;
+}
+
+#instructions {
+  width: 768px;
+  margin: 0 auto;
+}
+
+#p1-controls {
+  float: left;
+  text-align: left;
+}
+
+#p2-controls {
+  float: right;
+  text-align: right;
 }

@@ -7,6 +7,7 @@ Pong in the browser.
 - [x] Add pause button
 - [x] Decrease maximum angle that ball can bounce off
 - [x] Fix CSS formatting (+fix ball bouncing early off paddle 1 bug)
+- [x] Add favicon
+- [x] Add instructions
 - [ ] Add options for speed, color, paddleWidth, etc.
-- [ ] Add instructions
-- [ ] Add favicon
+
