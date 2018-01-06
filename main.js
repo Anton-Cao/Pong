@@ -1,5 +1,5 @@
 const refreshDelay = 12;
-const epsilon = 2; // margin of error for paddle-ball collision
+const epsilon = 2; // margin of error for paddle-ball collision, 2*epsilon should be greater than vX
 const wallSound = new Audio("pong.wav");
 const paddleSound = new Audio("pong2.wav");
 const fieldHeight = 384;
@@ -52,6 +52,13 @@ $(document).ready(function() {
       }
   });
 
+  $('#color').change(function() {
+    $('body').css('color', $('#color').val());
+    $('.paddle').css('background', $('#color').val());
+    $('#ball').css('background', $('#color').val());
+    $('#color').blur();
+  });
+  
 });
 
 function move() {
@@ -117,7 +124,7 @@ function moveBall() {
   // collision with P1 paddle
   const leftX = parseInt($('#leftpaddle').css('left'));
   const leftY = parseInt($('#leftpaddle').css('top'));
-  if (newX  <= leftX + epsilon + 4 && newX >= leftX - epsilon && vX < 0) {
+  if (newX + vX <= leftX + epsilon && newX >= leftX - epsilon && vX < 0) {
     if (newY >= leftY - epsilon && newY <= leftY + paddleWidth + epsilon) {
       
       const theta = getTheta(vY, newY, leftY);
@@ -132,7 +139,7 @@ function moveBall() {
   // collision with P2 paddle
   const rightX = fieldWidth - parseInt($('#rightpaddle').css('right')) - 10;
   const rightY = parseInt($('#rightpaddle').css('top'));
-  if (newX  >= rightX - epsilon && newX <= rightX + epsilon && vX > 0) {
+  if (newX + vX >= rightX - epsilon && newX <= rightX + epsilon && vX > 0) {
     if (newY >= rightY - epsilon && newY <= rightY + paddleWidth + epsilon) {
 
       const theta = getTheta(vY, newY, rightY);

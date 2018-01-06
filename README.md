@@ -12,5 +12,6 @@ Pong in the browser.
 - [x] Add score cap
 - [ ] Add options for speed, color, paddleWidth, etc.
 - [ ] Add increase speed option
+- [ ] Add footer
 
 

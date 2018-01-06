@@ -48,7 +48,6 @@ h1 {
 
 .halffield {
   border: 4px solid;
-  border-color: #FFFFFF;
   height: 384px;
   width: 378px;
 }
@@ -64,7 +63,7 @@ h1 {
 }
 
 .paddle {
-  background: white;
+  background: #FFFFFF;
   height: 80px;
   width: 4px;
 }
@@ -106,4 +105,9 @@ h1 {
 #p2-controls {
   float: right;
   text-align: right;
+}
+
+#settings {
+  width: 768px;
+  margin: 0 auto;
 }
