@@ -10,8 +10,9 @@ Pong in the browser.
 - [x] Add favicon
 - [x] Add instructions
 - [x] Add score cap
-- [ ] Add options for speed, color, paddleWidth, etc.
+- [x] Add options for speed, color, paddleWidth, etc.
 - [ ] Add increase speed option
 - [ ] Add footer
+- [ ] Add bullets
 
 

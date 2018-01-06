@@ -59,6 +59,29 @@ $(document).ready(function() {
     $('#ball').css('background', $('#color').val());
     $('#color').blur();
   });
+
+  $('#speed').change(function() {
+    const newSpeed = parseInt($('#speed').val());
+    vX = vX * newSpeed / ballSpeed;
+    vY = vY * newSpeed / ballSpeed;
+    ballSpeed = newSpeed;
+    $('#speed').blur();
+  });
+
+  $('#scoreCap').change(function() {
+    scoreCap = parseInt($('#scoreCap').val());
+    $('#scoreCap').blur();
+  });
+  
+  $('#paddleWidth').change(function() {
+    paddleWidth = parseInt($('#paddleWidth').val());
+    const leftY = parseInt($('#leftpaddle').css('top'));
+    const rightY = parseInt($('#rightpaddle').css('top'));
+    $('#leftpaddle').css('top', Math.min(leftY, fieldHeight - paddleWidth).toString() + "px");
+    $('#rightpaddle').css('top', Math.min(rightY, fieldHeight - paddleWidth).toString() + "px");
+    $('.paddle').css('height', paddleWidth.toString() + "px");
+    $('#paddleWidth').blur();
+  });
   
 });
 
@@ -78,6 +101,9 @@ function movePaddles() {
   }
   if (map[83] && height1 + paddleWidth <= fieldHeight) {
     height1 += paddleSpeed;
+    if (height1 + paddleWidth > fieldHeight) {
+      height1 = fieldHeight - paddleWidth;
+    }
     $('#leftpaddle').css('top',height1.toString() +"px");
   }
   if (map[38] && height2 >= 0) {
@@ -86,6 +112,9 @@ function movePaddles() {
   }
   if (map[40] && height2 + paddleWidth <= fieldHeight) {
     height2 += paddleSpeed;
+    if (height2 + paddleWidth > fieldHeight) {
+      height2 = fieldHeight - paddleWidth;
+    }
     $('#rightpaddle').css('top',height2.toString() +"px");
   }
 }
