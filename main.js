@@ -1,4 +1,4 @@
-const refreshRate = 12;
+const refreshDelay = 12;
 const epsilon = 2; // margin of error for paddle-ball collision
 const wallSound = new Audio("pong.wav");
 const paddleSound = new Audio("pong2.wav");
@@ -8,6 +8,7 @@ const fieldWidth = 768;
 let paddleSpeed = 7;
 let paddleWidth = 80;
 let ballSpeed = 4;
+let scoreCap = 5;
 let start = false;
 let paused = false;
 let map = {87:false, 83:false, 38:false, 40:false}; // stores which keys are being pressed, to fix ghosting
@@ -20,22 +21,26 @@ $(document).ready(function() {
     
   $(document).keydown(function(e) {
     // toggle start when spacebar is pressed
-    if (e.keyCode === 32 && start) {
-      paused = !paused;
-      if (!paused) {
+    if (e.keyCode === 32) {
+      if (!start) {
+        start = true;
+        $('#rightscore').text("0");
+        $('#leftscore').text("0");
+        $('#ball').css('left', (fieldWidth / 2).toString() + "px");
+        $('#ball').css('top', (fieldHeight / 2).toString() + "px");
         $('#message').text("Press [space] to pause!");
         move();
       } else {
-        $('#message').text("Press [space] to resume!");
+        paused = !paused;
+        if (!paused) {
+          $('#message').text("Press [space] to pause!");
+          move();
+        } else {
+          $('#message').text("Press [space] to resume!");
+        }
       }
     }
-    
-    if (!start) {
-      start = true;
-      $('#message').text("Press [space] to pause!");
-      move();
-    }
-    
+   
     if (e.keyCode in map) {
       map[e.keyCode] = true;
     }
@@ -52,7 +57,7 @@ $(document).ready(function() {
 function move() {
   movePaddles();
   moveBall();
-  if (start && !paused) { setTimeout(function(){move()}, refreshRate); }
+  if (start && !paused) { setTimeout(function(){move()}, refreshDelay); }
 }
 
 function movePaddles() {
@@ -144,7 +149,7 @@ function moveBall() {
     $('#ball').css('top', (fieldHeight / 2).toString() + "px");
     newVX = -ballSpeed;
     newVY = ballSpeed;
-    $('#rightscore').html(parseInt($('#rightscore').html()) + 1);
+    $('#rightscore').html(parseInt($('#rightscore').html()) + 1); 
   }
 
   if (newX >= fieldWidth - 10) {
@@ -155,6 +160,16 @@ function moveBall() {
     $('#leftscore').html(parseInt($('#leftscore').html()) + 1);
   }
 
+  if (parseInt($('#rightscore').html()) >= scoreCap || parseInt($('#leftscore').html()) >= scoreCap) {
+    if (parseInt($('#rightscore').html()) < parseInt($('#leftscore').html())) {
+      $('#message').text("Player 1 Wins! Press [space] to restart.");
+      start = false;
+    } else if (parseInt($('#rightscore').html()) > parseInt($('#leftscore').html())) {
+      $('#message').text("Player 2 Wins! Press [space] to restart.");
+      start = false;
+    }
+  }
+  
   vX = newVX;
   vY = newVY;
 }
