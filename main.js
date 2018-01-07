@@ -8,6 +8,7 @@ const fieldWidth = 768;
 let paddleSpeed = 7;
 let paddleWidth = 80;
 let ballSpeed = 4;
+let speedBoost = 1;
 let scoreCap = 5;
 let start = false;
 let paused = false;
@@ -82,7 +83,15 @@ $(document).ready(function() {
     $('.paddle').css('height', paddleWidth.toString() + "px");
     $('#paddleWidth').blur();
   });
-  
+
+  $('#speedBoost').change(function() {
+    if ($('#speedBoost').prop('checked')) {
+      speedBoost = 1.08;
+    } else {
+      speedBoost = 1;
+    }
+    $('#speedBoost').blur();
+  })
 });
 
 function move() {
@@ -159,9 +168,12 @@ function moveBall() {
       
       const theta = getTheta(vY, newY, leftY);
 
-      newVY = Math.sign(vY) * Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.cos(theta * Math.PI/180);
+      newVY = Math.sign(vY) * Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.cos(theta*Math.PI/180);
       newVX = Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.sin(theta * Math.PI/180);
 
+      newVX *= speedBoost;
+      newVY *= speedBoost;
+      
       paddleSound.play();
     }
   }
@@ -177,6 +189,9 @@ function moveBall() {
       newVY = Math.sign(vY) * Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.cos(theta*Math.PI/180);
       newVX = -Math.sqrt(Math.pow(vX,2) + Math.pow(vY,2)) * Math.sin(theta * Math.PI/180);
 
+      newVX *= speedBoost;
+      newVY *= speedBoost;
+      
       paddleSound.play();
     }
   }
