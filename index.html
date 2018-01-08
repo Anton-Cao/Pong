@@ -5,6 +5,7 @@
     <link rel="shortcut icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link type = "text/css" rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
 
@@ -38,8 +39,8 @@
     </div>
     
     <div id="instructions">
-      <p id="p1-controls">Player 1 - Up: <strong>W</strong> Down: <strong>S</strong></p>
-      <p id="p2-controls">Player 2 - Up: <i class="fa fa-arrow-up"></i> Down: <i class="fa fa-arrow-down"></i></p>
+      <p id="p1-controls">Player 1 - Up: [<strong>W</strong>] Down: [<strong>S</strong>]</p>
+      <p id="p2-controls">Player 2 - Up: [<i class="fa fa-arrow-up"></i>] Down: [<i class="fa fa-arrow-down"></i>]</p>
       <br style="clear: both;">
     </div>
 
@@ -77,7 +78,22 @@
         <option value="80" selected="selected">Regular</option>
         <option value="120">Wide</option>
       </select>
+
+      <br>
+      
+      <label for="speedBoost">Speed Boost:</label>
+      <input type="checkbox" id="speedBoost" class="setting">
     </div>
+
+    <footer>
+      <div id = "footer-bg-left">
+        <p>Built with <i class="fa fa-wrench"></i> by Anton Cao</p>
+      </div>
+
+      <div id = "footer-bg-right">
+        <p>Fork me on Github! <a href="https://github.com/Anton-Cao/Pong/"><i class="fa fa-github"></i></a></p>
+      </div>
+    </footer>
     
   </body>
 </html>
