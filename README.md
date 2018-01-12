@@ -14,9 +14,9 @@ Pong in the browser.
 - [x] Add increase speed option
 - [x] Add footer
 - [x] Flash "press space to begin"
-- [ ] Group together restart game code
+- [x] Group together restart game code
+- [x] Hovertext for Speed Boost
 - [ ] Rearrange website
-- [ ] Hovertext for Speed Boost
 - [ ] Add volume controls
 - [ ] Add missiles
 - [ ] Add background music
