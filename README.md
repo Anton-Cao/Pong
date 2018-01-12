@@ -13,6 +13,11 @@ Pong in the browser.
 - [x] Add options for speed, color, paddleWidth, etc.
 - [x] Add increase speed option
 - [x] Add footer
-- [ ] Add bullets
-
+- [x] Flash "press space to begin"
+- [ ] Group together restart game code
+- [ ] Rearrange website
+- [ ] Hovertext for Speed Boost
+- [ ] Add volume controls
+- [ ] Add missiles
+- [ ] Add background music
 
