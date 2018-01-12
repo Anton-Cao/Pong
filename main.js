@@ -19,10 +19,15 @@ let vX = ballSpeed;
 let vY = ballSpeed;
 
 $(document).ready(function() {
-    
+  flash();
+  
+  /*
+    For Input
+   */
   $(document).keydown(function(e) {
     // toggle start when spacebar is pressed
     if (e.keyCode === 32) {
+      
       $('.setting').toggleClass('disabled');
       if (!start) {
         start = true;
@@ -53,7 +58,10 @@ $(document).ready(function() {
         map[e.keyCode] = false;
       }
   });
-
+ 
+  /*
+    For Control Panel
+  */
   $('#color').change(function() {
     $('body').css('color', $('#color').val());
     $('.paddle').css('background', $('#color').val());
@@ -91,8 +99,18 @@ $(document).ready(function() {
       speedBoost = 1;
     }
     $('#speedBoost').blur();
-  })
+  });
 });
+
+function flash() {
+  $('.flash').fadeOut(300, function() {
+    $('.flash').fadeIn(800, function() {
+      if (!start) {
+        setTimeout(flash, 0);
+      }
+    });
+  });
+}
 
 function move() {
   movePaddles();
@@ -216,10 +234,12 @@ function moveBall() {
     if (parseInt($('#rightscore').html()) < parseInt($('#leftscore').html())) {
       $('#message').text("Player 1 Wins! Press [space] to restart.");
       start = false;
+      flash();
       $('.setting').toggleClass('disabled');
     } else if (parseInt($('#rightscore').html()) > parseInt($('#leftscore').html())) {
       $('#message').text("Player 2 Wins! Press [space] to restart.");
       start = false;
+      flash();
       $('.setting').toggleClass('disabled');
     }
   }
