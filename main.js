@@ -1,7 +1,7 @@
 const refreshDelay = 12;
 const epsilon = 2; // margin of error for paddle-ball collision
-const wallSound = new Audio("pong.wav");
-const paddleSound = new Audio("pong2.wav");
+const wallSound = new Audio("assets/audio/pong.wav");
+const paddleSound = new Audio("assets/audio/pong2.wav");
 const fieldHeight = 384;
 const fieldWidth = 768;
 
@@ -102,11 +102,18 @@ $(document).ready(function() {
   });
 });
 
+function endGame(winningPlayer) {
+  $('#message').text("Player " + winningPlayer + " Wins! Press [space] to restart.");
+  start = false;
+  flash();
+  $('.setting').toggleClass('disabled');
+}
+
 function flash() {
-  $('.flash').fadeOut(300, function() {
-    $('.flash').fadeIn(800, function() {
+  $('.flash').fadeOut(400, function() {
+    $('.flash').fadeIn(400, function() {
       if (!start) {
-        setTimeout(flash, 0);
+        setTimeout(flash, 300);
       }
     });
   });
@@ -232,15 +239,9 @@ function moveBall() {
 
   if (parseInt($('#rightscore').html()) >= scoreCap || parseInt($('#leftscore').html()) >= scoreCap) {
     if (parseInt($('#rightscore').html()) < parseInt($('#leftscore').html())) {
-      $('#message').text("Player 1 Wins! Press [space] to restart.");
-      start = false;
-      flash();
-      $('.setting').toggleClass('disabled');
+      endGame('1');
     } else if (parseInt($('#rightscore').html()) > parseInt($('#leftscore').html())) {
-      $('#message').text("Player 2 Wins! Press [space] to restart.");
-      start = false;
-      flash();
-      $('.setting').toggleClass('disabled');
+      endGame('2');
     }
   }
   

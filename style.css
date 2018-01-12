@@ -7,6 +7,7 @@ body {
 
 a {
   color: white;
+  text-decoration: none;
 }
 
 #title {
@@ -160,8 +161,22 @@ footer p {
   width: 260px;
 }
 
+#footer-bg-center {
+  margin: 0 auto;
+  color: gray;
+  width: 250px;
+}
+
+#footer-bg-center p {
+  position: relative;
+  text-align: center;
+  font-size: 12px;
+  top: 30px;
+}
+
 #footer-bg-right {
   float: right;
+  right: 0px;
   background-color: #d0400c;
   color: white;
   border-top-left-radius: 15px;
